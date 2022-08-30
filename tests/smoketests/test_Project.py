@@ -369,6 +369,10 @@ class TestProjectConstructor:
         assert isinstance(p.subsample_table, pd.DataFrame)
         assert p.subsample_table.shape == (7, 5)
 
+    def test_peppy_creates_samples_with_correct_columns(self, config_with_nextflow_pep):
+        p = Project(config_with_nextflow_pep, sample_table_index="sample")
+        assert all([hasattr(sample, "fasta") for sample in p.samples])
+
 
 class TestProjectManipulationTests:
     @pytest.mark.parametrize("example_pep_cfg_path", ["amendments1"], indirect=True)
